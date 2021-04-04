@@ -1,14 +1,25 @@
 <template>
+  <div>
+    <div
+      v-on:click.stop="$emit('closeModal')"
+      class="modalContainer">
+    </div>
   <div class="modal">
-    <div style="display: flex; justify-content: space-between ">
+    <div
+      style="display: flex;
+      justify-content: space-between;
+      background-color: white;
+      border-radius: 10px;
+      padding-right: 5px;
+">
       <input
-        v-bind:value="localData.type"
+        v-bind:value="localData.isIncome"
         v-on:change="dataTypeValidate($event.target.checked)"
         type="checkbox"
         id="checkbox"
-        v-model="localData.type">
+        v-model="localData.isIncome">
       <label for="checkbox">
-        {{ this.localData.type ? 'доход': 'расход' }}
+        {{ this.localData.isIncome ? 'доход': 'расход' }}
       </label>
     </div>
     <input
@@ -18,10 +29,13 @@
       v-on:input="dataSumValidate($event.target.value)"
     >
     <input v-model="localData.title" placeholder="название">
-    <textarea v-model="localData.description" placeholder="описание"/>
+    <textarea
+      v-model="localData.description"
+      placeholder="описание"/>
     <button v-on:click="sendToParent">
       подтвердить
     </button>
+  </div>
   </div>
 </template>
 
@@ -30,26 +44,29 @@
 export default {
   name: 'modalVue',
   components: {},
-  // props: [
-  //   'cardData'
-  // ],
+  props: [
+    'editData'
+  ],
   data () {
+    // let objCopy = Object.assign({}, obj);
     return {
       message: '',
-      localData: {
-        sum: '',
-        title: '',
-        description: '',
-        type: true
-      }
+      localData: Object.assign({}, this.editData)
+      // localData: {
+      //   sum: '',
+      //   title: '',
+      //   description: '',
+      //   type: true,
+      //   id: null
+      // }
     }
   },
   methods: {
     dataSumValidate (sum) {
       if (sum < 0) {
-        this.localData.type = false
+        this.localData.isIncome = false
       } else {
-        this.localData.type = true
+        this.localData.isIncome = true
       }
       this.localData.sum = sum
     },
@@ -59,7 +76,11 @@ export default {
       } else {
         this.localData.sum = -Math.abs(this.localData.sum)
       }
-      this.localData.type = type
+      this.localData.isIncome = type
+      // console.log(this.localData)
+    },
+    closeModal () {
+      this.$emit('closeModal')
     },
     sendToParent () {
       if (this.localData.sum === '') {
@@ -74,27 +95,47 @@ export default {
     }
   },
   mounted () {
+    // console.log(this.editData)
   },
   computed: {
-    dataToReturn () {
-      const data = this.localData
-      data.sum = 1
-      return data
-    }
+    // dataToReturn () {
+    //   const data = this.localData
+    //   data.sum = 1
+    //   return data
+    // }
   }
+  // beforeDestroy () {
+  //   this.$emit('saveLocalData', this.localData)
+  //   // console.log('123')
+  // }
 }
 </script>
 
 <style>
 .modal {
+  opacity: 1;
+  border-radius: 25px;
   position: absolute;
-  background-color: aqua;
+  background-color: #7578E0;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
-  padding: 100px;
+  padding: 25px;
+}
+.modalContainer {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: gray;
+  width:100%;
+  height:100%;
+  opacity: 0.5;
+}
+textarea {
+  height: auto;
 }
 </style>

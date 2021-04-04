@@ -3,7 +3,7 @@
     <h1>
       Расходы и доходы
       <svg
-        @click.stop="modalVueShow = !modalVueShow"
+        @click.stop="modalVueShow = true"
         height="469.33333pt"
         viewBox="0 0 469.33333 469.33333"
         width="469.33333pt" xmlns="http://www.w3.org/2000/svg"
@@ -16,6 +16,7 @@
         </g>
       </svg>
     </h1>
+    <div>Итог:{{account}}</div>
     <div class="cardsList">
       <div
         v-for="card in Cards"
@@ -29,12 +30,14 @@
       </div>
     </div>
     <modalVue
+      v-bind:edit-data="modalData"
       v-on:sendData="modalFunc"
+      v-on:closeModal="modalVueShow = false"
       v-if="this.modalVueShow"
     />
   </div>
 </template>
-
+<!--      v-on:saveLocalData="modalDataSaved = updateId ? false : $event"-->
 <script>
 import Card from '@/components/Card'
 import modalVue from '@/components/modalVue'
@@ -50,23 +53,48 @@ export default {
       modalVueShow: false,
       newCardId: 0,
       Cards: [],
+      modalData: {
+        sum: '',
+        title: '',
+        description: '',
+        isIncome: true
+      },
+      // modalDataSaved: null,
       updateId: false
     }
   },
-  // kusbagdflauishdbflasbdflualsfdjasdfyvmfchblfikusbagdflauishdbflasbdflualsfdjasdfyvmfchblfikusbagdflauishdbflasbdflualsfdjasdfyvmfchblfikusbagdflauishdbflasbdflualsfdjasdfyvmfchblfikusbagdflauishdbflasbdflualsfdjasdfyvmfchblfikusbagdflauishdbflasbdflualsfdjasdfyvmfchblfikusbagdflauishdbflasbdflualsfdjasdfyvmfchblfikusbagdflauishdbflasbdflualsfdjasdfyvmfchblfikusbagdflauishdbflasbdflualsfdjasdfyvmfchblfikusbagdflauishdbflasbdflualsfdjasdfyvmfchblfikusbagdflauishdbflasbdflualsfdjasdfyvmfchblfikusbagdflauishdbflasbdflualsfdjasdfyvmfchblfikusbagdflauishdbflasbdflualsfdjasdfyvmfchblfikusbagdflauishdbflasbdflualsfdjasdfyvmfchblfikusbagdflauishdbflasbdflualsfdjasdfyvmfchblfikusbagdflauishdbflasbdflualsfdjasdfyvmfchblfikusbagdflauishdbflasbdflualsfdjasdfyvmfchblfikusbagdflauishdbflasbdflualsfdjasdfyvmfchblfikusbagdflauishdbflasbdflualsfdjasdfyvmfchblfikusbagdflauishdbflasbdflualsfdjasdfyvmfchblfikusbagdflauishdbflasbdflualsfdjasdfyvmfchblfikusbagdflauishdbflasbdflualsfdjasdfyvmfchblfikusbagdflauishdbflasbdflualsfdjasdfyvmfchblfikusbagdflauishdbflasbdflualsfdjasdfyvmfchblfi
   mounted () {
-    this.newCard(100)
-    this.newCard(100)
-    this.newCard(-100)
-    this.newCard(100, '123', '')
+    this.newCard(565119, 'test', 'test')
+    this.newCard(-106490, 'test', 'test')
+    this.newCard(-106580, 'test', 'test')
+    this.newCard(161100, 'test', 'test')
+  },
+  computed: {
+    account () {
+      let count = 0
+      this.Cards.forEach(item => {
+        count += +item.sum
+      })
+      return count
+    }
   },
   methods: {
     modalFunc (data) {
+      const { sum, title, description } = data
       if (this.updateId) {
+        this.changeCard(sum, title, description)
       } else {
-        const { sum, title, description } = data
         this.newCard(sum, title, description)
       }
+      this.modalData = {
+        sum: '',
+        title: '',
+        description: '',
+        isIncome: true
+      }
+      // this.modalDataSaved = false
+      this.modalData = false
+      this.modalVueShow = false
     },
     newCard (sum, title, description) {
       this.newCardId++
@@ -75,7 +103,7 @@ export default {
         sum: sum,
         title: title,
         description: description,
-        type: (sum > 0) ? 'income' : 'consumption',
+        isIncome: (sum > 0),
         date: new Date()
       })
     },
@@ -87,8 +115,21 @@ export default {
           )
         ), 1)
     },
+    changeCard (sum = false, title = false, description = false) {
+      this.modalVueShow = true
+      const Card = this.Cards.find(item => item.id === this.updateId)
+      Card.sum = sum || Card.sum
+      Card.title = title || Card.title
+      Card.description = description || Card.description
+      Card.date = new Date()
+      Card.isIncome = (sum > 0)
+      this.updateId = false
+    },
     editCard (id) {
+      // this.modalDataSaved = false
       this.updateId = id
+      // console.log(this.Cards.find(item => item.id === id))
+      this.modalData = this.Cards.find(item => item.id === id)
       this.modalVueShow = true
     }
   }
