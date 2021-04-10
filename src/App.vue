@@ -1,12 +1,35 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+      <router-link to="/">Home</router-link>
+      |
+      <router-link to="/User">User</router-link>
     </div>
     <router-view/>
   </div>
 </template>
+
+<script>
+import { mapActions } from 'vuex'
+export default {
+  name: 'App',
+  data () {
+    return {}
+  },
+  methods: {
+    ...mapActions({
+      logIn: 'User/logIn',
+      addCards: 'addCards'
+    })
+  },
+  mounted () {
+    this.logIn()
+    this.addCards()
+  },
+  components: {
+  }
+}
+</script>
 
 <style lang="scss">
 #app {
@@ -18,7 +41,7 @@
 }
 
 #nav {
-  padding: 30px;
+  padding: 15px;
 
   a {
     font-weight: bold;

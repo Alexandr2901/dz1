@@ -1,18 +1,32 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <CardList
+      :cards="newsCards"
+    />
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+
+import CardList from '../components/CardList.vue'
+import { mapState } from 'vuex'
 
 export default {
   name: 'Home',
   components: {
-    HelloWorld
+    CardList
+  },
+  computed: {
+    ...mapState({
+      newsCards: state => state.AppStore.newsCards
+    })
   }
 }
 </script>
+
+<style>
+.home {
+  display: flex;
+  justify-content: center;
+}
+</style>
