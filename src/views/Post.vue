@@ -2,8 +2,8 @@
   <div v-if="Post" class="Post">
     <div
       style="display: flex; flex-direction: row; justify-content: space-around">
-      <div v-if="editIsTrue">{{ Post.author }}</div>
-      <div v-else>вы видимо автор</div>
+      <div v-if="!newIsTrue">{{ Post.author }}</div>
+      <div v-else>вы видимо автор </div>
       <div>
         <button
           v-if="!editIsTrue && !newIsTrue"
@@ -19,6 +19,11 @@
           @click="deletePostInVue"
         >delete
         </button>
+        <button
+          @click="newBlankComment"
+        >
+          new Comment
+        </button>
       </div>
       <input
         placeholder="Пока тут ничего нет"
@@ -31,10 +36,12 @@
       {{ Post.text }}
     </div>
     <textarea
+      id="postTextarea"
       placeholder="Пока тут ничего нет"
       class="PostText"
       v-else
       maxlength="5000"
+      @focusin="resize"
       @click="resize"
       @input="resize"
       v-model="Post.text"/>
@@ -42,8 +49,9 @@
       v-if="!editIsTrue"
       class="Comments">
       <Comment
+        v-on:need-update="update"
         v-for="comment in Post.comments"
-        :data="comment"
+        :startData="comment"
         :key="comment.id"
       />
     </div>
@@ -63,7 +71,7 @@ export default {
   data () {
     return {
       blankPost: {
-        author: '',
+        author: 'defaultAuthor',
         title: '',
         text: ''
       },
@@ -84,6 +92,14 @@ export default {
     ...mapMutations({
       setPost: 'server/SET_POST'
     }),
+    newBlankComment () {
+      this.Post.comments.splice(0, 0, {
+        postId: this.Post.id,
+        id: -1,
+        text: '',
+        author: 'defaultAuthor'
+      })
+    },
     resize (event) {
       event.target.style.height = 'auto'
       event.target.style.height = `${event.target.scrollHeight}px`
@@ -93,11 +109,17 @@ export default {
     },
     deletePostInVue () {
       this.deletePost(this.Post.id)
+      router.go(-1)
     },
     setMountData (ts) {
       if (!ts.newIsTrue) {
         this.pullPost(+ts.$route.params.id).then((payload) => {
           ts.Post = payload.data
+          if (this.editIsTrue) {
+            this.$nextTick(() => {
+              document.getElementById('postTextarea').focus()
+            })
+          }
         })
       } else {
         ts.Post = ts.blankPost
@@ -106,7 +128,6 @@ export default {
     save () {
       if (this.newIsTrue) {
         this.createPost(this.Post).then((payload) => {
-          // console.log('payload')
           router.push({ path: `/Post/${payload.data.id}` })
         })
       } else {
@@ -114,6 +135,9 @@ export default {
           router.push({ path: `/Post/${this.Post.id}` })
         })
       }
+    },
+    update () {
+      this.setMountData(this)
     }
   },
   computed: {
@@ -142,7 +166,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 .Post {
   margin: 10px;
 
@@ -159,12 +183,12 @@ input {
 
 textarea {
   border: none;
+  resize: none;
 }
 
 .PostText {
   padding: 15px;
   width: 90%;
-  resize: none;
   overflow: hidden;
   text-overflow: ellipsis;
   text-align: left;

@@ -61,5 +61,38 @@ export default {
           reject(error)
         })
     })
+  },
+  deleteComment ({ commit }, id) {
+    return new Promise((resolve, reject) => {
+      axios.delete('http://localhost:3000/comments/' + +id)
+        .then(response => {
+          resolve(response)
+        })
+        .catch(error => {
+          reject(error)
+        })
+    })
+  },
+  updateComment ({ commit }, data) {
+    return new Promise((resolve, reject) => {
+      axios.patch('http://localhost:3000/comments/' + data.id, data)
+        .then(response => {
+          resolve(response)
+        })
+        .catch(error => {
+          reject(error)
+        })
+    })
+  },
+  createComment ({ commit }, data) {
+    return new Promise((resolve, reject) => {
+      axios.post('http://localhost:3000/comments/', data)
+        .then(response => {
+          resolve(response)
+        })
+        .catch(error => {
+          reject(error)
+        })
+    })
   }
 }

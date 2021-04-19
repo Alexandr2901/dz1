@@ -14,7 +14,7 @@ module.exports = () => {
         text: randomText
       })
     for (let j = 0; j < 10; j++) {
-      let randomText = 'some comment' + 'on post ' + i + ' with id ' + (i * 10 + j)
+      let randomText = 'comment with id ' + (i * 10 + j) + ' on post ' + i + ' '
       randomText = randomText.repeat(10)
       data.comments.push(
         {

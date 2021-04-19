@@ -1,29 +1,21 @@
 <template>
   <div id="app">
-    <header>
+    <header style="display: flex; justify-content: space-around">
       <router-link to="/Posts">home</router-link>
-      <router-link to="/Post/new">new</router-link>
+      <router-link to="/Post/new">new post</router-link>
     </header>
+    <hr>
     <router-view/>
   </div>
 </template>
 
 <script>
 
-import { mapActions } from 'vuex'
-
 export default {
   methods: {
-    ...mapActions({
-      deletePost: 'server/deletePost',
-      createPost: 'server/createPost',
-      updatePost: 'server/updatePost'
-    })
   },
   mounted () {
-    // this.updatePost()
-    // this.test()
-    // this.test()
+
   }
 }
 </script>

@@ -50,8 +50,9 @@ export default {
     }),
     changePage (param) {
       if ((this.page + param) > 0) {
-        this.pullPage(this.page + param)
-        router.push({ path: `/Posts/${this.page + param}` })
+        this.pullPage(this.page + param).then(() => {
+          router.push({ path: `/Posts/${this.page + param}` })
+        })
       }
     }
   },
