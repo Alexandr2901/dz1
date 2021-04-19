@@ -1,12 +1,32 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
+    <header>
+      <router-link to="/Posts">home</router-link>
+      <router-link to="/Post/new">new</router-link>
+    </header>
     <router-view/>
   </div>
 </template>
+
+<script>
+
+import { mapActions } from 'vuex'
+
+export default {
+  methods: {
+    ...mapActions({
+      deletePost: 'server/deletePost',
+      createPost: 'server/createPost',
+      updatePost: 'server/updatePost'
+    })
+  },
+  mounted () {
+    // this.updatePost()
+    // this.test()
+    // this.test()
+  }
+}
+</script>
 
 <style lang="scss">
 #app {
