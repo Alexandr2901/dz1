@@ -1,0 +1,11 @@
+@media (orientation: landscape) {
+  .Header {
+    padding: 0 11vw 0 11vw;
+  }
+}
+
+@media (orientation: portrait) {
+  .Header {
+    padding: 0 2.5vw 0 2.5vw;
+  }
+}
