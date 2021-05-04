@@ -1,5 +1,5 @@
 <template>
-  <div class="centered">
+  <div class="categoryPage centered">
     <div class="categoryName">
       {{ this.$route.params.category }}
     </div>
@@ -35,7 +35,7 @@ export default {
     getPosts () {
       const data = {
         page: this.page,
-        category: this.$route.params.category === 'все_товары' ? null : this.$route.params.category
+        category: this.$route.params.category === 'Все товары' ? null : this.$route.params.category
       }
       this.pullPosts(data).then((products) => {
         this.products = products
@@ -58,7 +58,7 @@ export default {
 <style scoped>
 .categoryName {
   width: 77vw;
-  /*max-width: 1096px;*/
+margin-top: 29px;
   font-style: normal;
   font-weight: normal;
   font-size: 20px;
@@ -67,7 +67,10 @@ export default {
   align-items: center;
   text-transform: uppercase;
 }
-
+.categoryPage{
+  background-color: #F4F4F4;
+  width: 100%;
+}
 .products {
   display: flex;
   flex-wrap: wrap;

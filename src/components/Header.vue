@@ -2,8 +2,8 @@
   <div class="Header">
     <div class="Header-nav" v-if="categories.length > 0">
       <button
-        v-on:click="selectCategory('все_товары')"
-      >Все товары
+        v-on:click="selectCategory('Все товары')"
+      >{{'Все товары'}}
       </button>
       <button
         v-on:click="selectCategory(category.name)"
@@ -52,25 +52,30 @@ button {
   height: 100%;
   border: none;
   background-color: inherit;
-  border-radius: 0 0 5px 5px;
+  font-size: 16px;
+  margin-right: 34px;
+  margin-left: 12px;
+  padding: 0;
 }
 
 .Header {
   display: flex;
-  align-items: center;
   min-height: 44px;
   background-color: white;
+  justify-content: center;
 }
 
 .Header-nav {
-  //border: black 3px solid;
   width: 78vw;
-  //max-width: 1124px;
   height: 1px;
   min-height: 44px;
 
   :first-child {
     background: #F4F4F4;
+    line-height: 20px;
+    border-radius: 5px 5px 0 0;
+    padding: 0 14px 0 14px;
   }
+
 }
 </style>

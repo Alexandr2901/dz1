@@ -9,7 +9,7 @@
         {{ product.price }}
       </div>
     </div>
-    <div>
+    <div class="brand">
       {{ product.brand }}
     </div>
     <div class="description">
@@ -48,7 +48,7 @@ export default {
 <style scoped>
 .product {
   box-sizing: content-box;
-
+  margin-top: 30px;
   margin-left: 22px;
   min-width: 252px;
   /*max-width: 1000px;*/
@@ -63,10 +63,19 @@ export default {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  font-size: 20px;
+  line-height: 23px;
+  font-weight: 700;
 }
 
 .oldPrice {
+  font-style: normal;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 19px;
   text-decoration: line-through;
+  color: #868686;
+
 }
 
 .discount {
@@ -86,8 +95,16 @@ img {
 }
 
 .description {
+  margin-top: 5px;
+  font-size: 16px;
+  line-height: 19px;
   flex-direction: row;
   display: flex;
   justify-content: space-between;
+}
+.brand{
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 16px;
 }
 </style>

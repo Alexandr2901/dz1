@@ -32,8 +32,9 @@ export default {
 
 <style>
 #app {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+}
+body{
+  margin: 0;
+  font-family: "Roboto", "Times New Roman",serif;
 }
 </style>
