@@ -1,4 +1,5 @@
 // json-server --watch db.js --port 3004
+// json-server --watch db.js
 
 module.exports = () => {
   const data = {
@@ -14,34 +15,27 @@ module.exports = () => {
     id: 2,
     name: 'футболки'
   })
+  const specification = {
+    gender: 'мужской',
+    color: 'красный',
+    material: 'хлопок',
+    type: 'футболка',
+    season: 'лето',
+    vendorCode: '1110151050',
+    producingCountry: 'Индонезия'
+
+  }
   for (let i = 0; i < 100; i++) {
     data.products.push({
-      name: 'test name ' + i,
-      price: i * 1000,
-      categoryId: i % 2 + 1
+      id: i,
+      brand: 'test name ' + i,
+      price: (i + 1) * 1000,
+      categoryId: i % 2 + 1,
+      description: 'this is description ' + i,
+      discount: (i % 6) * 10,
+      specification: specification,
+      url: 'https://storage-cdn5.gloria-jeans.ru/medias/BKT005690-1-02-300Wx300H.jpg?context=bWFzdGVyfHByb2R1Y3R8NzYwMnxpbWFnZS9qcGVnfGgwOC9oYTIvOTI0NjY4MDgwOTUwMi9CS1QwMDU2OTAtMS0wMl8zMDBXeDMwMEguanBnfGI0MjQ3YmQzMDZiYzQ0NDE4N2EwNjdmMDE0NTFiZWQyNTBiYjM4ZTk5ZjcxYmI3OTgzYjIzM2YxZjNkNDU0ZWQ'
     })
   }
-  // for (let i = 0; i < 100; i++) {
-  //   let randomText = 'This is random unique text ' + i + ' '
-  //   randomText = randomText.repeat(100)
-  //   data.posts.push(
-  //     {
-  //       id: i,
-  //       author: `user${i}`,
-  //       title: `title${i}`,
-  //       text: randomText
-  //     })
-  //   for (let j = 0; j < 10; j++) {
-  //     let randomText = 'comment with id ' + (i * 10 + j) + ' on post ' + i + ' '
-  //     randomText = randomText.repeat(10)
-  //     data.comments.push(
-  //       {
-  //         id: i * 10 + j,
-  //         author: `user${i + 1}`,
-  //         text: randomText,
-  //         postId: i
-  //       })
-  //   }
-  // }
   return data
 }

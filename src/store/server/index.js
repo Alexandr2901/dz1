@@ -1,13 +1,19 @@
 import actions from './actions'
 
 const state = {
-  category: []
+  categories: []
 }
-const getters = {}
+const getters = {
+  getCategories: state => state.categories,
+  getCategoryId: state => name => {
+    // console.log(state.categories.find(item => item.name !== name))
+    return state.categories.find(item => item.name === name).id
+  }
+}
 
 const mutations = {
   SET_CATEGORY (state, payload) {
-    state.category = payload
+    state.categories = payload
   }
 }
 export default {

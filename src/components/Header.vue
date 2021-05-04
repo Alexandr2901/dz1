@@ -3,7 +3,8 @@
     <div class="Header-nav" v-if="categories.length > 0">
       <button
         v-on:click="selectCategory('все_товары')"
-      >Все товары</button>
+      >Все товары
+      </button>
       <button
         v-on:click="selectCategory(category.name)"
         v-for="category in categories" :key="category.id"
@@ -32,32 +33,21 @@ export default {
       pullProducts: 'server/pullProducts'
     }),
     selectCategory (category) {
-      this.getCategory(1)
-      router.push({ path: `/category/${category}` })
+      if (this.$route.path !== `/category/${category}`) {
+        this.getCategory(1)
+        router.push({ path: `/category/${category}` })
+      }
     }
   },
   mounted () {
     this.getCategories().then(data => {
       this.categories = data
     })
-    this.pullProducts()
   }
 }
 </script>
 
 <style scoped lang="scss">
-@media (orientation: landscape) {
-  .Header {
-    padding: 0 11vw 0 11vw;
-  }
-}
-
-@media (orientation: portrait) {
-  .Header {
-    padding: 0 2.5vw 0 2.5vw;
-  }
-}
-
 button {
   height: 100%;
   border: none;
@@ -73,6 +63,9 @@ button {
 }
 
 .Header-nav {
+  //border: black 3px solid;
+  width: 78vw;
+  //max-width: 1124px;
   height: 1px;
   min-height: 44px;
 
