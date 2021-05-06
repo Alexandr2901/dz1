@@ -3,7 +3,7 @@
     <div class="Header-nav" v-if="categories.length > 0">
       <button
         v-on:click="selectCategory('Все товары')"
-      >{{'Все товары'}}
+      >{{ 'Все товары' }}
       </button>
       <button
         v-on:click="selectCategory(category.name)"
@@ -48,6 +48,12 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@media (max-width: 700px) {
+  .Header-nav {
+    min-width: 100vw;
+  }
+}
+
 button {
   height: 100%;
   border: none;
@@ -69,6 +75,9 @@ button {
   width: 78vw;
   height: 1px;
   min-height: 44px;
+  display: flex;
+  //min-width: 500px;
+  flex-wrap: nowrap;
 
   :first-child {
     background: #F4F4F4;

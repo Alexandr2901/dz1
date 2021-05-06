@@ -1,8 +1,9 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
+// import Home from '../views/Home.vue'
 import CategoryPage from '@/views/CategoryPage'
 import Product from '@/views/Product'
+import Home from '@/views/Home'
 
 Vue.use(VueRouter)
 
@@ -10,7 +11,8 @@ const routes = [
   {
     path: '/',
     name: 'Home',
-    component: Home
+    component: Home,
+    redirect: 'category/Все товары'
   },
   {
     path: '/category/:category/:page?',

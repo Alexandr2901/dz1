@@ -56,9 +56,14 @@ export default {
 </script>
 
 <style scoped>
+@media (max-width: 700px) {
+  .products {
+    min-width: 100vw;
+  }
+}
 .categoryName {
   width: 77vw;
-margin-top: 29px;
+  margin-top: 29px;
   font-style: normal;
   font-weight: normal;
   font-size: 20px;
@@ -67,10 +72,12 @@ margin-top: 29px;
   align-items: center;
   text-transform: uppercase;
 }
-.categoryPage{
+
+.categoryPage {
   background-color: #F4F4F4;
   width: 100%;
 }
+
 .products {
   display: flex;
   flex-wrap: wrap;
